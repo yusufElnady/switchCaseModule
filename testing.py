@@ -1,13 +1,15 @@
-from switchcase import switch
+from module import switch
 
-b = 10
+a = 1
+b = 1
 
-
-switch(b, """{
-    case 1;
+switch("b", """
+    {
+    case a;
         print("false")
         break
     case 10;
         print("correct")
         break
-    }""")
+    }"""
+       , __name__)
