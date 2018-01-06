@@ -25,6 +25,6 @@ def switch(val, exp: str, current_module):
                 break
             condition.append(exp[pointer])
             pointer += 1
-        if eval("".join(condition)):  # if condition is true
+        if eval("".join(condition)) and pointer != len(exp):  # if condition is true
             strng = exp[pointer + 1:exp.find("break", pointer) - 1].split()
             exec("".join(strng))  # excute the case code
