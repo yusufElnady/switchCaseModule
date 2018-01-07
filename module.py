@@ -18,13 +18,44 @@ def switch(val, exp: str, current_module):
     for case in range(exp.count("case")):
         pointer = exp.find("case", pointer) + 4  # puts the pointer on the start of the condition
         condition = [val, "=="]  # writes the condition
-        while pointer < len(exp):
+        while True:
             # here it adds to the condition till it hits ;
             char = exp[pointer]
             if char == ";":
                 break
             condition.append(exp[pointer])
             pointer += 1
-        if eval("".join(condition)) and pointer != len(exp):  # if condition is true
-            strng = exp[pointer + 1:exp.find("break", pointer) - 1].split()
+            if pointer == len(exp):
+                raise Exception("didn't find ; to end case condition")
+
+        if eval("".join(condition)):  # if condition is true
+            last = exp.find("break", pointer)
+            if last == -1:
+                raise Exception("didn't find a break statement to end ")
+
+            another_case = pointer
+            while True:
+                found = exp.find("case", another_case+1)
+                if found == -1 :
+                    break
+                another_case = found
+            while exp[another_case] != ";":
+                another_case += 1
+                if another_case == len(exp):
+                    raise Exception("didn't find ; to end case condition")
+            strng = exp[another_case + 1:last - 1].split()
             exec("".join(strng))  # excute the case code
+
+
+def switch_func(val, cases: list):
+    """
+    
+    :param val: value to check
+    :param cases: list of tubules of (case,function to invoke) pairs
+    :return: return True if invoked a function if didn't invoke returns False
+    """
+    do = dict(cases)
+    if val in do:
+        do[val]()
+        return True
+    return False
