@@ -1,14 +1,12 @@
 from switchcase import switch
 
-b = 10
+dictionary = {"a":10, "b":10, "c":5, "d":"correct", "e":"incorrect"}
 
-print(__file__)
-
-switch(b, """{
-    case 1;
-        print("false")
+switch(dictionary, """a{
+    case c;
+        print("incorrect")
         break
-    case 10;
-        print("correct")
+    case b;
+        print(d)
         break
     }""")
